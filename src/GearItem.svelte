@@ -1,24 +1,65 @@
 <!-- GearItem.svelte -->
 <script>
-  export let item;
-  export let is_selected = false;
-  import { createEventDispatcher } from 'svelte';
-
-  const dispatch = createEventDispatcher();
+  let { item, is_selected, onToggle } = $props();
 </script>
 
-<div class="p-4 border rounded-xl flex flex-col w-[250px] cursor-pointer hover:shadow-md transition" on:click={() => dispatch('toggle')}>
-  <img src={item.image} alt={item.name} class="w-full h-40 object-cover rounded mb-2" />
-  <div class="flex-1">
-    <h3 class="text-lg font-bold mb-1">{item.name}</h3>
-    <p class="text-sm text-gray-600 mb-1">{item.description}</p>
-    <p class="text-sm mb-1">Weight: {item.weight} kg</p>
-    <input type="checkbox" bind:checked={is_selected} class="mt-2" />
+<button class="gear-item" onclick={() => onToggle()} aria-checked={is_selected} role="checkbox" tabindex="0">
+  <img src={item.image} alt={item.name} class="gear-image" />
+  <div class="gear-info">
+    <h3 class="gear-name">{item.name}</h3>
+    <p class="gear-weight">Weight: {item.weight} kg</p>
+    <div class="gear-checkbox">{is_selected ? '✅' : '⬜️'}</div>
   </div>
-</div>
+</button>
 
 <style>
-  input[type="checkbox"] {
-    transform: scale(1.2);
+  .gear-item {
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    cursor: pointer;
+    transition: box-shadow 0.2s;
+  }
+
+  .gear-item:hover,
+  .gear-item[aria-checked="true"] {
+    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #888;
+  }
+
+  .gear-image {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 8px;
+  }
+
+  .gear-info {
+    flex: 1;
+  }
+
+  .gear-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .gear-description {
+    font-size: 12px;
+    color: #555;
+    margin-bottom: 4px;
+  }
+
+  .gear-weight {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .gear-checkbox {
+    font-size: 20px;
   }
 </style>

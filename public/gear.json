@@ -147,6 +147,36 @@
     "image": "https://media.widforss.no/product-images/L/terra-nova-adventure-tarp-2-cactus-green-0.jpg"
   },
   {
+    "id": "powerbank-1",
+    "name": "Dacota Power bank 10000 mAh",
+    "category": "other",
+    "weight": 0.216,
+    "image": "https://media.power-cdn.net/images/h-2a0ac6a8a7b3666e77381fd838957b14/products/1044691/1044691_5_600x600_t_g.webp"
+  },
+  {
+    "id": "powerbank-2",
+    "name": "Linocell Power Bank 5000 mAh",
+    "category": "other",
+    "weight": 0.120,
+    "image": "https://manuals.plus/wp-content/uploads/2022/03/Linocell-89255-Power-Bank-5000-mAh-Featured-Image.png"
+  },
+  {
+    "id": "water-bottle-1",
+    "name": "Camelbak",
+    "category": "other",
+    "weight": 0.175,
+    "image": "https://ecobranders.com/cdn/shop/files/customizable-recycled-plastic-camelbak-chute-water-bottle-blue.jpg?v=1709569332&width=1332",
+    "selected": true
+  },
+  {
+    "id": "water-bottle-2",
+    "name": "Camelbak",
+    "category": "other",
+    "weight": 0.175,
+    "image": "https://ecobranders.com/cdn/shop/files/customizable-recycled-plastic-camelbak-chute-water-bottle-blue.jpg?v=1709569332&width=1332",
+    "selected": true
+  },
+  {
     "id": "dog-1",
     "name": "Lunas mat",
     "category": "hundgrejer",

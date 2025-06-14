@@ -2,10 +2,12 @@
 <script>
   import GearItem from './GearItem.svelte';
   import { onMount } from 'svelte';
+  import { format_weight } from './lib/utils.js';
 
   let gear_items = $state([]);
   let selected_ids = $state(new Set());
   let number_of_persons = $state(2);
+  let number_of_days = $state(3);
   let input_json_url = '/gear.json';
 
   onMount(() => {
@@ -52,9 +54,6 @@
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
   }
 
-  function format_weight(weight) {
-    return Math.round(weight * 100) / 100;
-  }
 
 </script>
 
@@ -67,8 +66,22 @@
       bind:value={number_of_persons}
       class="number-persons-input" />
     person{number_of_persons > 1 ? 's' : ''}
+    on a
+    <input
+      type="number"
+      min="1"
+      max="100"
+      bind:value={number_of_days}
+      class="number-persons-input" />
+    day trip
   </h1>
 
+  <div class="food-container">
+    <!-- add food. xg per day times number of days -->
+  </div>
+  <div class="clothes-container">
+    <!-- Placeholder for clothes items if needed -->
+    </div>
   <div class="gear-container">
     {#if gear_items.length === 0}
       <p>Loading...</p>
@@ -92,13 +105,13 @@
 
 <footer class="footer">
     <div class="footer-main">
-      <div class="selected-info">Selected items: {selected_items().length}</div>
-      <div class="total-weight">Total Weight: {format_weight(total_weight())} kg</div>
+      <div class="dummy-info"><!-- Placeholder for alignment --></div>
+      <div class="total-weight">Total Weight: {format_weight(total_weight())}</div>
     </div>
   {#if number_of_persons > 1}
     <div class="per-person-info">
       <div class="dummy-info"><!-- Placeholder for alignment --></div>
-      <div class="per-person-weight">Per person: {Math.round(total_weight() / number_of_persons * 100) / 100} kg</div>
+      <div class="per-person-weight">Per person: {format_weight(total_weight() / number_of_persons)}</div>
     </div>
   {/if}
 </footer>

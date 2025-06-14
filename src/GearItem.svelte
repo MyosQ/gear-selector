@@ -1,13 +1,14 @@
 <!-- GearItem.svelte -->
 <script>
   let { item, is_selected, onToggle } = $props();
+  import { format_weight } from './lib/utils.js';
 </script>
 
 <button class="gear-item" onclick={() => onToggle()} aria-checked={is_selected} role="checkbox" tabindex="0">
   <img src={item.image} alt={item.name} class="gear-image" />
   <div class="gear-info">
     <h3 class="gear-name">{item.name}</h3>
-    <p class="gear-weight">Weight: {item.weight} kg</p>
+    <p class="gear-weight">{format_weight(item.weight)}</p>
     <div class="gear-checkbox">{is_selected ? '✅' : '⬜️'}</div>
   </div>
 </button>

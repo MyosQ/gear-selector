@@ -1,0 +1,23 @@
+[
+  {
+    "id": "1",
+    "name": "Lundhags 90L Backpack",
+    "category": "Backpacks",
+    "weight": 2.5,
+    "image": "https://www.xxl.no/filespin/8ab7fc6026954806aec34d06ad48816a?quality=75&bgcolor=efefef&resize=750%2C750"
+  },
+    {
+    "id": "3",
+    "name": "Lundhags 30L Backpack",
+    "category": "Backpacks",
+    "weight": 1.9,
+    "image": "https://owp.klarna.com/product/640x640/3009959151/Lundhags-Tived-Light-25-L-Hiking-Backpack-Gold.jpg?ph=true"
+  },
+  {
+    "id": "2",
+    "name": "Haglöfs Outdoor Jacket",
+    "category": "Jackets",
+    "weight": 0.8,
+    "image": "https://www.xxl.no/filespin/3a555df3e3e44f39bfa9c4d3d4ae6883?quality=75&bgcolor=efefef&resize=640%2C640"
+  }
+]

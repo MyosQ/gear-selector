@@ -15,7 +15,7 @@
 <style>
   .gear-item {
     padding: 16px;
-    border: 1px solid #ddd;
+    border: 1px solid #888;
     border-radius: 16px;
     display: flex;
     flex-direction: column;
@@ -24,11 +24,15 @@
     transition: box-shadow 0.2s;
   }
 
-  .gear-item:hover,
-  .gear-item[aria-checked="true"] {
+  .gear-item:hover {
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-    border-color: #888;
+    border-color: #ddd;
   }
+
+    .gear-item[aria-checked="true"] {
+    box-shadow: 0px 4px 12px rgba(0, 128, 0, 0.3);
+    border-color: #4caf50;
+    }
 
   .gear-image {
     width: 100%;
@@ -45,12 +49,6 @@
   .gear-name {
     font-size: 16px;
     font-weight: 700;
-    margin-bottom: 4px;
-  }
-
-  .gear-description {
-    font-size: 12px;
-    color: #555;
     margin-bottom: 4px;
   }
 

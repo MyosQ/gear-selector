@@ -1,14 +1,26 @@
 <!-- App.svelte -->
 <script>
   import GearItem from './GearItem.svelte';
+  import { onMount } from 'svelte';
 
   let gear_items = $state([]);
   let selected_ids = $state(new Set());
   let number_of_persons = $state(2);
+  let input_json_url = '/gear.json';
 
-  fetch('/gear.json')
-    .then((res) => res.json())
-    .then((data) => (gear_items = data));
+  onMount(() => {
+    fetch(input_json_url)
+      .then((res) => res.json())
+      .then((data) => {
+        gear_items = data;
+
+        gear_items.forEach(item => {
+          if (item.selected) {
+            selected_ids.add(item.id);
+          }
+        });
+      });
+  });
 
   function toggle_selection(id) {
     selected_ids = new Set(
@@ -34,8 +46,14 @@
     }, {});
   }
 
-  function formatCategoryName(name) {
+  function format_category_name(name) {
+    if (!name) return '';
+    name = name.replace(/-/g, ' ');
     return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+  }
+
+  function format_weight(weight) {
+    return Math.round(weight * 100) / 100;
   }
 
 </script>
@@ -57,13 +75,13 @@
     {:else}
       {#each Object.entries(grouped_by_category(gear_items)) as [category, grouped_items]}
         <section class="gear-category">
-          <h2 class="category-title">{formatCategoryName(category)}</h2>
+          <h2 class="category-title">{format_category_name(category)}</h2>
           <div class="gear-items">
             {#each grouped_items as item}
-              <GearItem
-                item={item}
-                is_selected={selected_ids.has(item.id)}
-                onToggle={() => toggle_selection(item.id)} />
+                <GearItem
+                  item={item}
+                  is_selected={selected_ids.has(item.id)}
+                  onToggle={() => toggle_selection(item.id)} />
             {/each}
           </div>
         </section>
@@ -73,10 +91,9 @@
 </main>
 
 <footer class="footer">
-<!--  div.footer-main-->
     <div class="footer-main">
       <div class="selected-info">Selected items: {selected_items().length}</div>
-      <div class="total-weight">Total Weight: {total_weight()} kg</div>
+      <div class="total-weight">Total Weight: {format_weight(total_weight())} kg</div>
     </div>
   {#if number_of_persons > 1}
     <div class="per-person-info">
@@ -101,6 +118,7 @@
   .gear-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 40px;
   }
 
@@ -126,13 +144,13 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: white;
-    border-top: 1px solid #ddd;
+    background-color: #f1f1f1; /* Lighter background color */
+    border-top: 1px solid #e0e0e0; /* Subtle border */
     padding: 16px;
-    box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 10px 10px rgba(0, 0, 0, 0.7);
     font-family: system-ui, sans-serif;
     z-index: 50;
-    color: #555;
+    color: #333; /* Darker text for better readability */
   }
   .footer-main, .per-person-info {
     display: flex;

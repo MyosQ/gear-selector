@@ -1,5 +1,5 @@
 
-  export function format_weight(weight) {
+  export function format_weight(weight, decimalPlaces = 2) {
     if (typeof weight !== 'number' || isNaN(weight)) {
       throw new Error('Invalid weight value');
     }
@@ -14,7 +14,11 @@
         if (Number.isInteger(weight)) {
           return `${weight}${unicode_nbsp}kg`;
         }
-        return `${weight.toFixed(2)}${unicode_nbsp}kg`;
+        return `${weight.toFixed(decimalPlaces)}${unicode_nbsp}kg`;
     }
     return `${(weight * 1000)} g`;
+  }
+
+  export function format_weight_summary(weight) {
+    return format_weight(weight, 1);
   }

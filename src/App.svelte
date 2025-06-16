@@ -2,14 +2,14 @@
 <script>
   import GearItem from './GearItem.svelte';
   import { onMount } from 'svelte';
-  import { format_weight } from './lib/utils.js';
+  import {format_weight, format_weight_summary} from './lib/utils.js';
 
   let gear_items = $state([]);
   let selected_ids = $state(new Set());
   let number_of_persons = $state(2);
   let number_of_days = $state(3);
-  let food_weight_per_day_per_person = $state(0.5);
-  let clothes_weight_per_person = $state(2);
+  let food_weight_per_day_per_person = $state(1.5);
+  let clothes_weight_per_person = $state(7);
   let input_json_url = '/gear.json';
 
   onMount(() => {
@@ -73,20 +73,42 @@
 <div class="layout">
 <main class="main-container">
   <h1 class="title">🎒 Gear Selector for
-    <input
-      type="number"
-      min="1"
-      max="10"
-      bind:value={number_of_persons}
-      class="number-persons-input" />
+  <span class="person-toggle">
+    <label class:selected={number_of_persons.toString() === '1'}>
+      <input
+        type="radio"
+        name="persons"
+        value=1
+        bind:group={number_of_persons} />
+      1
+    </label>
+    <label class:selected={number_of_persons.toString() === '2'}>
+      <input
+        type="radio"
+        name="persons"
+        value=2
+        bind:group={number_of_persons} />
+      2
+    </label>
+  </span>
     person{number_of_persons > 1 ? 's' : ''}
     on a
-    <input
-      type="number"
-      min="1"
-      max="100"
-      bind:value={number_of_days}
-      class="number-persons-input" />
+<!--    <input-->
+<!--      type="number"-->
+<!--      min="1"-->
+<!--      max="100"-->
+<!--      bind:value={number_of_days}-->
+<!--      class="number-persons-input" />-->
+      <span class="days-slider">
+          <label for="days">{number_of_days}</label>
+          <input
+            id="days"
+            type="range"
+            min="1"
+            max="14"
+            bind:value={number_of_days}
+            class="slider" />
+    </span>
     day trip
   </h1>
 
@@ -139,21 +161,21 @@
 
 <aside class="aside-display">
     <div class="total-weight">
-      <div>Total weight: {format_weight(total_weight())}</div>
+      <div>Total weight: {format_weight_summary(total_weight())}</div>
         <div class="breakdown">
-            <div>Gear: {format_weight(gear_weight())}</div>
-            <div>Food: {format_weight(food_weight())}</div>
-            <div>Clothes: {format_weight(clothes_weight())}</div>
+            <div>🛠 Gear: {format_weight_summary(gear_weight())}</div>
+            <div>🍞 Food: <span class="weight">{format_weight_summary(food_weight())}</span></div>
+            <div>👕 Clothes: {format_weight_summary(clothes_weight())}</div>
         </div>
     </div>
   {#if number_of_persons > 1}
     <div class="aside-display-divider"></div>
     <div class="per-person-weight">
-        <div>Per person: {format_weight(total_weight() / number_of_persons)}</div>
+        <div>Per person: {format_weight_summary(total_weight() / number_of_persons)}</div>
         <div class="breakdown">
-            <div>Gear: {format_weight(gear_weight() / number_of_persons)}</div>
-            <div>Food: {format_weight(food_weight() / number_of_persons)}</div>
-            <div>Clothes: {format_weight(clothes_weight() / number_of_persons)}</div>
+            <div>🛠 Gear: {format_weight_summary(gear_weight() / number_of_persons)}</div>
+            <div>🍞 Food: {format_weight_summary(food_weight() / number_of_persons)}</div>
+            <div>👕 Clothes: {format_weight_summary(clothes_weight() / number_of_persons)}</div>
         </div>
     </div>
   {/if}
@@ -211,7 +233,7 @@
     top: 1rem;
     justify-content: center;
     display: flex;
-    gap: 1rem;
+    gap: 1.5rem;
     padding: 2rem 3rem;
     background-color: #f9f9f9;
     border-radius: 0.5rem;
@@ -226,6 +248,7 @@
   }
   .total-weight, .per-person-weight {
     font-size: 18px;
+    min-width: 15ch;
     text-align: right;
     font-weight: 700;
 
@@ -263,4 +286,69 @@
     background-color: #e0e0e099; /* Subtle divider color */
     margin: 16px 0; /* Spacing around the divider */
   }
+
+.person-toggle {
+  display: inline-flex;
+  gap: 0.5rem;
+  margin: 0 0.5rem;
+}
+
+.person-toggle label {
+  padding: 0.3em 0.8em;
+  border-radius: 0.4em;
+  cursor: pointer;
+  user-select: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  border: 1px solid #111;
+}
+
+.person-toggle label.selected {
+  background-color: #111;
+  color: white;
+  border-color: #ccc;
+}
+
+.person-toggle input {
+  display: none;
+}
+
+
+.days-slider {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  max-width: 300px;
+    min-width: 200px;
+}
+
+.slider {
+  width: 100%;
+  appearance: none;
+  height: 6px;
+  border-radius: 3px;
+  background: #cdeac0; /* light green track */
+  outline: none;
+  transition: background 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+ background: #38a169; /* medium green thumb */
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: #38a169; /* medium green thumb */
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+
 </style>

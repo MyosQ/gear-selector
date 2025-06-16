@@ -30,10 +30,11 @@
     border-color: #ddd;
   }
 
-    .gear-item[aria-checked="true"] {
+  .gear-item[aria-checked="true"] {
     box-shadow: 0px 4px 12px rgba(0, 128, 0, 0.3);
-    border-color: #4caf50;
-    }
+    border-color: #528d55;
+    border-width:  4px;
+  }
 
   .gear-image {
     width: 100%;
